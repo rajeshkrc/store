@@ -1,45 +1,53 @@
 const express = require("express");
-const hash = require("../lib/auth/hash");
+const { check, validationResult }   = require('express-validator');
+const hash = require("../lib/auth/hash.lib");
+const { getResponseObject } = require("../lib/auth/util.lib");
+const { resStatusCode, validationConfig } = require("../config");
 const { user: User } = require("../model");
 const signupRouter = express.Router();
 
-signupRouter.post("/", async (req, res, next) => {
-    console.log("signup", req.body);
-    const { username, password } = req.body;
-    let userData = {};
+const validations = [
+    check('username', validationConfig.username.msg)
+    .isLength({ min: validationConfig.username.min, max: validationConfig.username.max }),
+    check('password', validationConfig.password.msg)
+    .isLength({ min: validationConfig.password.min, max: validationConfig.password.max }),
+];
+
+signupRouter.post("/", validations, async (req, res, next) => {
+    
+    let { username, password } = req.body;
+    let resData = {}; 
 
     try {
-        
-        const hashPassword = await hash.hashText(password, 10);
-
-        const userObj = new User({
-            username,
-            password: hashPassword,
-        });
     
-        userData = await userObj.save(userObj);
+        const validateResult = validationResult(req);
+        
+        if (validateResult.isEmpty()) {
+            username = username.toLocaleLowerCase();
+            const user = await User.findOne({ username }, { _id: 1 });
+            
+            if (!user) {
+
+                const hashPassword = await hash.hashText(password, 10);
+                const userData = await User.create({
+                    username,
+                    password: hashPassword,
+                });
+                
+                resData = getResponseObject(resStatusCode.success, "User registered successfuly!", "", userData);                
+                
+            } else {                
+               resData = getResponseObject(resStatusCode.error, "", "Username already exists");             
+            }
+        } else {            
+            resData = getResponseObject(resStatusCode.error, "",  validateResult.errors.map(err => err.msg));   
+        }
+        
     } catch (err) {
-        console.log(err);
-        res.status(500).send({
-            statusCode: 500,
-            errorMessage: "Unable to create user!",
-        });
+        resData = getResponseObject(resStatusCode.error, "",  "Unable to register user");        
     }
     
-
-    res.status(200).send(JSON.stringify({
-        statusCode: 200,
-        message: "This is signup page!",
-        data: userData, 
-    }));
-
-    
+    res.status(resData.statusCode).json(resData);
 });
-
-signupRouter.get("/getUsers", async (req, res, next) => {
-    const userData = await User.find();
-    console.log(userData);
-    res.send(userData);
-})
 
 module.exports = signupRouter;

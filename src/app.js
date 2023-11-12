@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const signupRouter = require("./auth/signup");
 const loginRout = require("./auth/login");
+const productRouter  = require("./product");
 const db = require("./model");
 
 db.mongoose.connect(db.url, {
@@ -19,5 +20,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/signup', signupRouter);
 app.use('/login', loginRout);
+app.use('/products', productRouter);
 
 module.exports = app;

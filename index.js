@@ -1,6 +1,8 @@
 const http = require("node:http");
+const dotenv = require('dotenv');
 const app = require("./src/app");
 const config = require("./src/config");
+dotenv.config();
 
 app.use((error, req, res, next) => {
     console.log(error);
