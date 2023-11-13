@@ -13,6 +13,13 @@ const validations = [
     .isLength({ min: validationConfig.password.min, max: validationConfig.password.max }),
 ];
 
+/**
+ * url: /api/signup
+ * method: post
+ * payload: { username: "test", password: "123456" }
+ * response: On success { statusCode: 200, message: "success", data: {object} }
+ * On fail { statusCode: 500, errMessage: ["error message"] }
+ */
 signupRouter.post("/", validations, async (req, res, next) => {
     
     let { username, password } = req.body;
@@ -44,6 +51,7 @@ signupRouter.post("/", validations, async (req, res, next) => {
         }
         
     } catch (err) {
+        console.log(err);
         resData = getResponseObject(resStatusCode.error, "",  "Unable to register user");        
     }
     

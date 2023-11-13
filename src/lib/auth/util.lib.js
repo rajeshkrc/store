@@ -1,3 +1,11 @@
+/**
+ * Funtion prepares response object
+ * @param {Number} statusCode 
+ * @param {String} successMsg 
+ * @param {[String] || String} errMsg 
+ * @param {Object} data 
+ * @returns 
+ */
 module.exports.getResponseObject = (statusCode, successMsg, errMsg, data) => {
     const resData = { statusCode };
 

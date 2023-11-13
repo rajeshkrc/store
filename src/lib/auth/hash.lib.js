@@ -6,6 +6,13 @@ class Hash {
         return await bcrypt.genSalt(saltNum);
     }
 
+    /**
+     * Method encrypt the plain text.
+     * It takes two argumnets string and number
+     * @param {String} text 
+     * @param {Number} saltNum 
+     * @returns {String} encrypted string
+     */
     async hashText(text = '', saltNum = 10) {
         try {
             if (!text) 
@@ -21,6 +28,13 @@ class Hash {
         
     }
 
+    /**
+     * Method compaires plain password text with encrypted string
+     * It takes two string type arguments
+     * @param {String} password 
+     * @param {String} hashText 
+     * @returns {Object}
+     */
     async compareText(password, hashText) {
         try {
             const isPasswordMatch = await bcrypt.compare(password, hashText);

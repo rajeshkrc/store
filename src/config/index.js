@@ -3,6 +3,7 @@ dotenv.config();
 
 const port = process.env.PORT || 3000;
 const jwtSecretKey = process.env.JWT_SECRET_KEY;
+const tokenHeaderKey = process.env.TOKEN_HEADER_KEY;
 const resStatusCode = {
     ok: 200,
     success: 201,
@@ -20,4 +21,5 @@ module.exports = {
     resStatusCode,
     validationConfig,
     jwtSecretKey,
+    tokenHeaderKey,
 };

@@ -1,25 +1,43 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const signupRouter = require("./auth/signup");
 const loginRout = require("./auth/login");
 const productRouter  = require("./product");
 const db = require("./model");
 
-db.mongoose.connect(db.url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-}).then(() => {
-    console.log("Connecte to database");
+db.mongoose.connect(db.url).then(() => {
+    console.log("Connected to mongodb");
 }).catch(error => {
     console.log("Cannot connect to the database!", error);
     process.exit();
 });
 
+db.mongoose.connection.on('connected', () => {
+    console.log(`Mongoose connected to db on port ${process.env.MONGODB_LOCAL_PORT}`);
+});
+
+db.mongoose.connection.on('error', err => {
+    console.log(err.message);
+  });
+
+db.mongoose.connection.on('disconnected', () => {
+    console.log('Mongoose connection is disconnected...');
+  });
+
+process.on('SIGINT', () => {
+    db.mongoose.connection.close(() => {
+        console.log('Mongoose connection is disconnected due to app termination...');
+        process.exit(0);
+    });
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
-app.use('/signup', signupRouter);
-app.use('/login', loginRout);
-app.use('/products', productRouter);
+app.use('/api/signup', signupRouter);
+app.use('/auth/api/login', loginRout);
+app.use('/api/products', productRouter);
 
 module.exports = app;

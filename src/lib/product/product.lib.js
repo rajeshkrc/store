@@ -1,10 +1,10 @@
 const request = require("request");
 const { validateToken } = require("../auth/jwt.lib");
 const { getResponseObject } = require("../auth/util.lib");
-const { resStatusCode, jwtSecretKey } = require("../../config");
+const { resStatusCode, jwtSecretKey, tokenHeaderKey } = require("../../config");
 
 module.exports.getProducts = (req, res, next) => {
-  const header = req.header("authorization");
+  const header = req.header(tokenHeaderKey);
   let resData = {};
 
   try {

@@ -14,6 +14,13 @@ const validations = [
     .isLength({ min: validationConfig.password.min, max: validationConfig.password.max }),
 ];
 
+/**
+ * url: /auth/login
+ * method: post
+ * payload: { username: "test", password: "123456" }
+ * response: On success { statusCode: 200, message: "success", data: {object} }
+ * On fail { statusCode: 500, errMessage: ["error message"] }
+ */
 loginRouter.post("/", validations, async (req, res, next) => {
     let { username, password } = req.body;
     let resData = {};
