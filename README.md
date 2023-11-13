@@ -105,3 +105,15 @@ Start the server
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
 | `Bearer Token` | `string` | **Required**. JWT token in request header |
+
+
+#### Logout user
+
+```http
+  GET /auth/api/logout
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `Bearer Token` | `string` | **Required**. JWT token in request header |
+

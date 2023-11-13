@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const signupRouter = require("./auth/signup");
-const loginRout = require("./auth/login");
+const loginRouter = require("./auth/login");
 const productRouter  = require("./product");
 const db = require("./model");
 
@@ -37,7 +37,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use('/api/signup', signupRouter);
-app.use('/auth/api/login', loginRout);
+app.use('/auth/api', loginRouter);
 app.use('/api/products', productRouter);
 
 module.exports = app;

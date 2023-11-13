@@ -36,6 +36,7 @@ services:
       - DB_PORT=$MONGODB_DOCKER_PORT
       - JWT_SECRET_KEY=$JWT_SECRET_KEY 
       - TOKEN_HEADER_KEY=$TOKEN_HEADER_KEY
+      - PRODUCT_API=$PRODUCT_API
     networks:
       - app-network
     stdin_open: true

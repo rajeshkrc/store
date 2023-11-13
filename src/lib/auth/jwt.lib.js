@@ -4,10 +4,12 @@ const jwt = require('jsonwebtoken');
  * Takes two arguments and generate jwt token
  * @param {Object} data 
  * @param {String} secretKey 
+ * @param {Object} options 
  * @returns {String}
  */
-module.exports.genrateToken = (data, secretKey) => {
-    const token = jwt.sign(data, secretKey, { expiresIn: '1h' });
+module.exports.genrateToken = (data, secretKey, options = {}) => {
+    const expiresIn = options.expiresIn ? options.expiresIn : '1h';
+    const token = jwt.sign(data, secretKey, { expiresIn });
 
     return token;
 };

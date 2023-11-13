@@ -13,6 +13,7 @@ module.exports = mongoose => {
              type: String,
              required: true,           
             },
+            token: { type: String }
         },
         { timestamps: true }
     ));
