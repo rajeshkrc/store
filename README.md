@@ -84,7 +84,4 @@ Start the server
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `Bearer Token` | `string` | **Required**. JWT token in request header |
-
-
-
+| `Baerer Token` | `string` | **Required**. JWT token in request header |
