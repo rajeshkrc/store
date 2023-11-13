@@ -27,6 +27,26 @@ Mongosh 2.0.1
 
 ## Run Locally
 
+### - Docker Container
+Clone the project
+
+```bash
+  git clone https://github.com/rajeshkrc/store.git
+```
+
+Go to the project directory
+
+```bash
+  cd my-project
+```
+
+Build image and run containers 
+
+```bash
+  docker-compose up
+```
+
+### - Manual setup 
 Clone the project
 
 ```bash
@@ -84,4 +104,4 @@ Start the server
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `Baerer Token` | `string` | **Required**. JWT token in request header |
+| `Bearer Token` | `string` | **Required**. JWT token in request header |
